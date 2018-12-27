@@ -44,6 +44,11 @@
                         title: '系统首页'
                     },
                     {
+                        icon: 'el-icon-lx-apps',
+                        index: 'compile',
+                        title: '模块编译'
+                    },
+                    {
                         icon: 'el-icon-lx-cascades',
                         index: 'table',
                         title: '基础表格'
