@@ -35,18 +35,22 @@
         data: function () {
             return {
                 form: {
-                    module: '',
-                    version: '',
-                    branch: '',
-                    mk: '',
-                    env_branch: '',
+                    module: 'Amigo_Mms',
+                    version: 'V8.0.0.k',
+                    branch: 'master',
+                    mk: 'Amigo_Mms_RA-V8.0.0.mk',
+                    env_branch: 'branch_gradle_2.1.0_rel',
                 }
             }
         },
         methods: {
             onSubmit() {
-                this.$axios.post('http://localhost:3000/users/compile').then(function () {
-                    this.$message.success('提交成功！');
+                console.log('start compile', JSON.stringify(this.form));
+                this.$axios.post('http://localhost:3000/users/compile', this.form).then((res) => {
+                    console.log("返回 - status：" + res.status + "; code:" + res.data.code);
+                    if (res.status === 200 && res.data.code === 0) {
+                        this.$message.success('编译成功！');
+                    }
                 });
             }
         }

@@ -10,10 +10,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/compile', function (req, res, next) {
-    console.log('compile start');
-    exec('python /home/liuhao/workspace/script/compile.py /home/liuhao/workspace/script/mms_config.json', function (error, stdout, stderr) {
+    console.log('compile start:', req.body);
+    var body = req.body;
+    var py = ' --module ' + body.module + ' --version ' + body.version + ' --branch ' + body.branch + ' --env_branch ' + body.env_branch + ' --mk ' + body.mk;
+    exec('python /home/liuhao/workspace/script/compile.py' + py, {maxBuffer: 1024 * 1024}, function (error, stdout, stderr) {
         if (error) {
-            console.info('stderr : ' + stderr);
+            console.error(`error: ${error}`);
+            res.json({code: 1, msg: "编译失败"});
+        } else {
+            res.json({code: 0, msg: "编译成功"});
         }
     });
 });
